@@ -15,3 +15,12 @@ CREATE TABLE post (
   body TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
+
+
+CREATE TABLE students (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  birth_date TEXT NOT NULL,
+  phone INT NOT NULL,
+  nacional_id TEXT NOT NULL
+);

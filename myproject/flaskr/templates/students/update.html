@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="name">Estudiantes</label>
+    <input name="name" id="name"
+      value="{{ request.form['name'] or post['name'] }}" required>
+    <label for="birth_date">Cumpleaños</label>
+    <input name="birth_date" id="birth_date"
+    value="{{ request.form['birth_date'] or post['birth_date'] }}" required>
+    <label for="phone">telefono</label>
+    <input name="phone" id="phone" value="{{ request.form['phone'] or post['phone'] }}" required>
+    <label for="nacional_id">Nacionalidad</label>
+    <input name="nacional_id" id="nacional_id" value="{{ request.form['nacional_id'] or post['nacional_id']  }}" required>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('students.delete', id=post['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}
