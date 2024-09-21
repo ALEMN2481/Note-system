@@ -13,12 +13,11 @@ def index():
     
     
     db = get_db()
-    posts = db.execute(
-        'SELECT students.id, name, birth_date, phone, nacional_id'
-        ' FROM students p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
+    students = db.execute(
+        'SELECT id, name, birth_date, phone, nacional_id'
+        ' FROM students'
     ).fetchall()
-    return render_template('students/index.html', posts=posts)
+    return render_template('students/index.html', posts=students)
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -40,8 +39,8 @@ def create():
             db = get_db()
             db.execute(
                 'INSERT INTO students (name, birth_date, phone, nacional_id)'
-                ' VALUES (?, ?, ?)',
-                (name, birth_date, phone, nacional_id, g.user['id'])
+                ' VALUES (?, ?, ?, ?)',
+                (name, birth_date, phone, nacional_id)
             )
             db.commit()
             return redirect(url_for('students.index'))
@@ -51,7 +50,7 @@ def create():
 def get_post(id, check_author=True):
     post = get_db().execute(
         'SELECT p.id, name, birth_date, phone, nacional_id'
-        ' FROM students p JOIN user u ON p.author_id = u.id'
+        ' FROM students '
         ' WHERE p.id = ?',
         (id,)
     ).fetchone()

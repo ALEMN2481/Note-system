@@ -1,25 +1,26 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Posts{% endblock %}</h1>
+  <h1>{% block title %}students{% endblock %}</h1>
   {% if g.user %}
     <a class="action" href="{{ url_for('students.create') }}">New</a>
   {% endif %}
 {% endblock %}
   
 {% block content %}
-  {% for post in posts %}
+  {% for students in students %}
     <article class="post">
       <header>
         <div>
-          <h1>{{ post['title'] }}</h1>
-          <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
-        </div>
+          <h1>{{ post['name'] }}</h1>
+          <div class="about">by {{ post['username']}}</div>
         {% if g.user['id'] == post['author_id'] %}
           <a class="action" href="{{ url_for('students.update', id=post['id']) }}">Edit</a>
         {% endif %}
       </header>
-      <p class="body">{{ post['body'] }}</p>
+      <p class="body">{{ post['birth_date'] }}</p>
+      <p class="body">{{ post['phone'] }}</p>
+      <p class="body">{{ post['nacional_id'] }}</p>
     </article>
     {% if not loop.last %}
       <hr>
